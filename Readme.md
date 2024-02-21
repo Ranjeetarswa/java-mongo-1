@@ -1,0 +1,5 @@
+# JavaScript and mongose backend series
+
+this is fast series java and mongose 
+
+- [Model link](EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIKCAEQABixAxiABDIGCAIQRRg5MgoIAxAAGLEDGIAEMgoIBBAAGLEDGIAEMg0IBRAAGIMBGLEDGIAEMgoIBhAAGLEDGIAEMgYIBxBFGD3SAQgzMjMzajBqN6gCALACAA)
