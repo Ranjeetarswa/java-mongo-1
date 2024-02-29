@@ -18,7 +18,7 @@ const registerUser = asyncHandler (async(req, res) => {
     // return res
 
     const {fullName, email, username, password } = req.body
-    console.log("email: ", email);
+     //console.log("email: ", email);
 
     if (
         [fullName, email, username, password].some((field) => 
@@ -28,7 +28,7 @@ const registerUser = asyncHandler (async(req, res) => {
         throw new ApiError(400 , "All fields are required")
     }
       
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
 
@@ -36,23 +36,35 @@ const registerUser = asyncHandler (async(req, res) => {
         throw new ApiError (409, "User with email or username already exists")
     }
 
+    //console.log(req.files);
+
     const avatarLocalPath = req.files?.avatar[0]?.path;
     const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
+    //  let coverImageLocalPath;
+    // if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.lenght > 0) {
+    //     coverImageLocalPath = req.files.coverImage[0].path
+    // }
+
     if (!avatarLocalPath) {
+        
         throw new ApiError(400, "Avatar files is required")
     }
-
+    
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-
+   // console.log(avatarLocalPath, avatar);
     if (!avatar) {
+        // console.log(  new ApiError(400, "Avatar files is required"))
+        // alert("Avatar files is required")
         throw new ApiError(400, "Avatar files is required")
-    }
+       
 
+    }
+ 
        const user = await User.create({
         fullName,
-        avatar: avatar.url,
+        avatar: avatar.url ,
         coverImage: coverImage?.url || "",
         email,
         password,
@@ -70,7 +82,7 @@ const registerUser = asyncHandler (async(req, res) => {
        return res.status(201).json(
         new ApiResponse(200, createdUser, "User registered Successfully")
        )
-       
+
 })       
 
 
